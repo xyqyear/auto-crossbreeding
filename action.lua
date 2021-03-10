@@ -133,7 +133,8 @@ local function transplant(src, dest)
     robot.useDown()
     gps.go(src)
     robot.useDown()
-    robot.useDown() -- use twice in case the first use is to harvest to crop
+    robot.useDown()
+    robot.useDown() -- because why not
     gps.go(config.dislocatorPos)
     signal.pulseDown()
 
@@ -144,7 +145,8 @@ local function transplant(src, dest)
         cross()
     end
     robot.useDown()
-    robot.useDown() -- same as above
+    robot.useDown()
+    robot.useDown() -- because why not
     gps.go(config.dislocatorPos)
     signal.pulseDown()
 
