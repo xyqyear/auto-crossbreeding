@@ -3,13 +3,13 @@ local robot = require("robot")
 local computer = require("computer")
 local inventory_controller = component.inventory_controller
 local tractor_beam = component.tractor_beam
-local geolyzer = component.geolyzer
 
 local os = require("os")
 local sides = require("sides")
 local gps = require("gps")
 local config = require("config")
 local signal = require("signal")
+local scanner = require("scanner")
 
 local function needCharge()
     return computer.energy() / computer.maxEnergy() < config.needChargeLevel
@@ -140,7 +140,7 @@ local function transplant(src, dest)
     -- transfer the crop to the destination
     robot.useDown()
     gps.go(dest)
-    if geolyzer.analyze(sides.down).name == "minecraft:air" then
+    if scanner.scan().name == "air" then
         cross()
     end
     robot.useDown()

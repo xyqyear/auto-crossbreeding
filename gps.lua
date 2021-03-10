@@ -12,15 +12,22 @@ local function getPos()
     return nowPos
 end
 
+local function safeForward()
+    local forwardSuccess
+    repeat
+        forwardSuccess = robot.forward()
+    until forwardSuccess
+end
+
 local function turnTo(facing)
     local delta = (facing - nowFacing) % 4
     nowFacing = facing
     if delta <= 2 then
-        for i = 1, delta do
+        for _=1, delta do
             robot.turnRight()
         end
     else
-        for i = 1, 4 - delta do
+        for _= 1, 4 - delta do
             robot.turnLeft()
         end
     end
@@ -64,7 +71,7 @@ local function go(pos)
     for i=1, #path do
         turnTo(path[i][1])
         for _=1, path[i][2] do
-            robot.forward()
+            safeForward()
         end
     end
 
