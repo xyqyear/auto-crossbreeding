@@ -7,12 +7,12 @@ local storage = {}
 local reverseStorage = {} -- for a faster lookup of already existing crops
 local farm = {} -- odd slots only
 
-local lowestTier = 100
-local lowestTierSlot = 0
-local lowestGr = 100
-local lowestGrSlot = 0
-local lowestGa = 100
-local lowestGaSlot = 0
+local lowestTier
+local lowestTierSlot
+local lowestGr
+local lowestGrSlot
+local lowestGa
+local lowestGaSlot
 
 local function getStorage()
     return storage
@@ -27,14 +27,20 @@ local function scanFarm()
     for slot=1, config.farmSize^2, 2 do
         gps.go(posUtil.farmToGlobal(slot))
         local cropInfo = scanner.scan("")
-        if cropInfo.name ~= "air" then
+        if cropInfo.isCrop then
             farm[slot] = cropInfo
         end
     end
     gps.resume()
 end
 
-local function updateHighestLowest()
+local function updateLowest()
+    lowestTier = 100
+    lowestTierSlot = 0
+    lowestGr = 100
+    lowestGrSlot = 0
+    lowestGa = 100
+    lowestGaSlot = 0
     for slot, crop in pairs(farm) do
         if crop.tier < lowestTier then
             lowestTier = crop.tier
@@ -68,7 +74,7 @@ end
 
 local function scanAll()
     scanFarm()
-    updateHighestLowest()
+    updateLowest()
     scanStorage()
 end
 
@@ -93,13 +99,16 @@ end
 
 local function updateFarm(slot, crop)
     farm[slot] = crop
-    updateHighestLowest()
+    updateLowest()
 end
 
 local function findSuitableFarmSlot(crop)
     -- if the return value > 0, then it's a valid crop slot
     -- if the return value == 0, then it's not a valid crop slot
     --     the caller may consider not to replace any crop.
+    print("crop.tier: "..crop.tier.."lowestTier: "..lowestTier.."lowestTierSlot"..lowestTierSlot)
+    print("crop.gr: "..crop.gr.."lowestGr: "..lowestGr.."lowestGrSlot"..lowestGrSlot)
+    print("crop.ga: "..crop.ga.."lowestGa: "..lowestGa.."lowestGrSlot"..lowestGaSlot)
     if crop.tier > lowestTier then
         return lowestTierSlot
     elseif crop.tier == lowestTier then
@@ -110,9 +119,8 @@ local function findSuitableFarmSlot(crop)
                 return lowestGaSlot
             end
         end
-    else
-        return 0
     end
+    return 0
 end
 
 return {

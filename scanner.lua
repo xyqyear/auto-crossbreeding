@@ -8,7 +8,7 @@ local function scan()
         return {isCrop=false, name="air"}
     elseif rawResult.name == "IC2:blockCrop" then
         if rawResult["crop:name"] == nil then
-            return {isCrop=true, name="crop"}
+            return {isCrop=false, name="crop"}
         elseif rawResult["crop:name"] == "weed" then
             return {isCrop=true, ame="weed"}
         else
