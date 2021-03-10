@@ -1,9 +1,4 @@
-local farmSize
-local storageSize = 13 -- const
-
-local function setFarmSize(n)
-    farmSize = n
-end
+local config = require("config")
 
 local function posToSlot(size, pos)
     local lastColNum
@@ -28,25 +23,24 @@ local function slotToPos(size, slot)
 end
 
 local function globalToFarm(globalPos)
-    return posToSlot(farmSize, globalPos)
+    return posToSlot(config.farmSize, globalPos)
 end
 
 local function farmToGlobal(farmSlot)
-    return slotToPos(farmSize, farmSlot)
+    return slotToPos(config.farmSize, farmSlot)
 end
 
 local function globalToStorage(globalPos)
-    return posToSlot(storageSize, {-globalPos[1], globalPos[2]})
+    return posToSlot(config.storageFarmSize, {-globalPos[1], globalPos[2]})
 end
 
 local function storageToGlobal(storageSlot)
-    local globalPos = slotToPos(storageSize, storageSlot)
+    local globalPos = slotToPos(config.storageFarmSize, storageSlot)
     globalPos[1] = -globalPos[1]
     return globalPos
 end
 
 return {
-    setFarmSize = setFarmSize,
     globalToFarm = globalToFarm,
     farmToGlobal = farmToGlobal,
     globalToStorage = globalToStorage,

@@ -2,8 +2,7 @@ local robot = require("robot")
 
 local nowFacing = 1
 local nowPos = {0, 0}
-local savedFacing = 0
-local savedPos = {0, 0}
+local savedPos = {}
 
 local function getFacing()
     return nowFacing
@@ -73,16 +72,15 @@ local function go(pos)
 end
 
 local function save()
-    savedFacing = nowFacing
-    savedPos = nowPos
+    savedPos[#savedPos+1] = nowPos
 end
 
 local function resume()
-    if savedFacing == 0 then
+    if #savedPos == 0 then
         return
     end
-    go(savedPos)
-    turnTo(savedFacing)
+    go(savedPos[#savedPos])
+    savedPos[#savedPos] = nil
 end
 
 return {
