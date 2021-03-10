@@ -106,9 +106,6 @@ local function findSuitableFarmSlot(crop)
     -- if the return value > 0, then it's a valid crop slot
     -- if the return value == 0, then it's not a valid crop slot
     --     the caller may consider not to replace any crop.
-    print("crop.tier: "..crop.tier.."lowestTier: "..lowestTier.."lowestTierSlot"..lowestTierSlot)
-    print("crop.gr: "..crop.gr.."lowestGr: "..lowestGr.."lowestGrSlot"..lowestGrSlot)
-    print("crop.ga: "..crop.ga.."lowestGa: "..lowestGa.."lowestGrSlot"..lowestGaSlot)
     if crop.tier > lowestTier then
         return lowestTierSlot
     elseif crop.tier == lowestTier then

@@ -20,13 +20,15 @@ local function breedOnce()
         elseif crop.name == "crop" then
             action.cross()
         elseif crop.isCrop then
-            if crop.name == "weed" or crop.ga > 21 or crop.re > 2 then
+            if crop.name == "weed" then
+                action.deweed()
+                action.cross()
+            elseif crop.ga > 21 or crop.re > 2 then
                 action.deweed()
                 action.cross()
             else
                 if database.existInStorage(crop) then
                     local suitableSlot = database.findSuitableFarmSlot(crop)
-                    print("found suitableSlot: "..suitableSlot)
                     if suitableSlot == 0 then
                         action.deweed()
                         action.cross()
@@ -51,6 +53,7 @@ local function main()
     init()
     while true do
         breedOnce()
+        gps.go({0,0})
         action.restockAll()
     end
 end
