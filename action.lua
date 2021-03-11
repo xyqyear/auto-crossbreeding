@@ -2,7 +2,6 @@ local component = require("component")
 local robot = require("robot")
 local computer = require("computer")
 local inventory_controller = component.inventory_controller
-local tractor_beam = component.tractor_beam
 
 local os = require("os")
 local sides = require("sides")
@@ -118,7 +117,6 @@ local function deweed()
     inventory_controller.equip()
     robot.useDown()
     robot.suckDown()
-    tractor_beam.suck()
     inventory_controller.equip()
     robot.select(selectedSlot)
 end
@@ -155,7 +153,7 @@ local function transplant(src, dest)
     gps.go(config.relayFarmlandPos)
     deweed()
     robot.swingDown()
-    tractor_beam.suck()
+    robot.suckDown()
 
     inventory_controller.equip()
     gps.resume()
