@@ -12,31 +12,44 @@ local lowestGrSlot
 local lowestGa
 local lowestGaSlot
 
-local function updateLowestTier()
+local function updateLowest()
     lowestTier = 100
     lowestTierSlot = 0
-    for slot, crop in pairs(database.getFarm()) do
-        if crop.tier < lowestTier then
-            lowestTier = crop.tier
-            lowestTierSlot = slot
-        end
-    end
-end
-
-local function updateGrGaWithTier(tier)
     lowestGr = 100
     lowestGrSlot = 0
     lowestGa = 100
     lowestGaSlot = 0
-    for slot, crop in pairs(database.getFarm()) do
-        if crop.tier <= tier then
-            if crop.gr < lowestGr then
-                lowestGr = crop.gr
-                lowestGrSlot = slot
+    local farm = database.getFarm()
+    local farmArea = config.farmSize^2
+    -- pairs() is slower than numeric for due to function call overhead.
+    for slot=1, farmArea, 2 do
+        local crop = farm[slot]
+        if crop ~= nil then
+            if crop.tier < lowestTier then
+                lowestTier = crop.tier
+                lowestTierSlot = slot
             end
-            if crop.ga < lowestGa then
-                lowestGa = crop.ga
-                lowestGaSlot = slot
+        end
+    end
+    for slot=1, farmArea, 2 do
+        local crop = farm[slot]
+        if crop ~= nil then
+            if crop.tier == lowestTier then
+                if crop.gr < lowestGr then
+                    lowestGr = crop.gr
+                    lowestGrSlot = slot
+                end
+            end
+        end
+    end
+    for slot=1, farmArea, 2 do
+        local crop = farm[slot]
+        if crop ~= nil then
+            if crop.tier == lowestTier and crop.gr == lowestGr then
+                if crop.ga < lowestGa then
+                    lowestGa = crop.ga
+                    lowestGaSlot = slot
+                end
             end
         end
     end
@@ -49,10 +62,6 @@ local function findSuitableFarmSlot(crop)
     if crop.tier > lowestTier then
         return lowestTierSlot
     elseif crop.tier == lowestTier then
-        -- make sure a lower tier crop does not replace a higher tier crop
-        -- even though this has much worse performance than the previous commit
-        -- this is how I lost a space plant :(
-        updateGrGaWithTier(crop.tier)
         if crop.gr > lowestGr then
             return lowestGrSlot
         elseif crop.gr == lowestGr then
@@ -89,7 +98,7 @@ local function breedOnce()
                         action.cross()
                         action.cross()
                         database.updateFarm(suitableSlot, crop)
-                        updateLowestTier()
+                        updateLowest()
                     end
                 else
                     action.transplant(posUtil.farmToGlobal(slot), posUtil.storageToGlobal(database.nextStorageSlot()))
@@ -104,7 +113,7 @@ end
 
 local function init()
     database.scanAll()
-    updateLowestTier()
+    updateLowest()
     action.restockAll()
 end
 
