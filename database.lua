@@ -40,25 +40,32 @@ local function scanFarm()
     gps.resume()
 end
 
-local function updateLowest()
+local function updateLowestTier()
     lowestTier = 100
     lowestTierSlot = 0
-    lowestGr = 100
-    lowestGrSlot = 0
-    lowestGa = 100
-    lowestGaSlot = 0
     for slot, crop in pairs(farm) do
         if crop.tier < lowestTier then
             lowestTier = crop.tier
             lowestTierSlot = slot
         end
-        if crop.gr < lowestGr then
-            lowestGr = crop.gr
-            lowestGrSlot = slot
-        end
-        if crop.ga < lowestGa then
-            lowestGa = crop.ga
-            lowestGaSlot = slot
+    end
+end
+
+local function updateGrGaWithTier(tier)
+    lowestGr = 100
+    lowestGrSlot = 0
+    lowestGa = 100
+    lowestGaSlot = 0
+    for slot, crop in pairs(farm) do
+        if crop.tier <= tier then
+            if crop.gr < lowestGr then
+                lowestGr = crop.gr
+                lowestGrSlot = slot
+            end
+            if crop.ga < lowestGa then
+                lowestGa = crop.ga
+                lowestGaSlot = slot
+            end
         end
     end
 end
@@ -80,7 +87,7 @@ end
 
 local function scanAll()
     scanFarm()
-    updateLowest()
+    updateLowestTier()
     scanStorage()
 end
 
@@ -105,7 +112,7 @@ end
 
 local function updateFarm(slot, crop)
     farm[slot] = crop
-    updateLowest()
+    updateLowestTier()
 end
 
 local function findSuitableFarmSlot(crop)
@@ -115,6 +122,10 @@ local function findSuitableFarmSlot(crop)
     if crop.tier > lowestTier then
         return lowestTierSlot
     elseif crop.tier == lowestTier then
+        -- make sure a lower tier crop does not replace a higher tier crop
+        -- even though this has much worse performance than the previous commit
+        -- this is how I lost a space plant :(
+        updateGrGaWithTier(crop.tier)
         if crop.gr > lowestGr then
             return lowestGrSlot
         elseif crop.gr == lowestGr then
