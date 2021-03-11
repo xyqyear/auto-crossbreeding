@@ -26,7 +26,7 @@ local function scanFarm()
     gps.save()
     for slot=1, config.farmSize^2, 2 do
         gps.go(posUtil.farmToGlobal(slot))
-        local cropInfo = scanner.scan("")
+        local cropInfo = scanner.scan()
         if cropInfo.isCrop then
             farm[slot] = cropInfo
         end
