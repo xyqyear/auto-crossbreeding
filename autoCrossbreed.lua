@@ -75,7 +75,7 @@ local function breedOnce()
             action.cross()
         elseif crop.isCrop then
             if crop.name == "weed" or crop.gr > 21 or
-              (crop.name == "venomilia" and crop.gr > 7) then
+              (crop.name == "venomilia" and crop.ga > 7) then
                 action.deweed()
                 action.cross()
             else
