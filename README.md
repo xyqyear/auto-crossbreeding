@@ -6,10 +6,11 @@ Robot upgrades:
 
 - Inventory Upgrade
 - Inventory Controller Upgrade
+- Redstone Card
 - Geolyzer (block)
 - Internet Card (if you want to install over internet, not necessary.)
 
-farm setup:
+Farm setup:
 
 \[WIP\]
 
