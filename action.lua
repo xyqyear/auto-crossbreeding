@@ -22,15 +22,6 @@ local function needMoreStick()
     return robot.count(robot.inventorySize()+config.stickSlot) < 2
 end
 
-local function fullInventory()
-    for i=1, robot.inventorySize() do
-        if robot.count(i) == 0 then
-            return false
-        end
-    end
-    return true
-end
-
 local function charge(resume)
     if resume ~= false then
         gps.save()
@@ -65,32 +56,8 @@ local function restockStick(resume)
     robot.select(selectedSlot)
 end
 
-local function dumpInventory(resume)
-    local selectedSlot = robot.select()
-    if resume ~= false then
-        gps.save()
-    end
-    gps.go(config.storagePos)
-    for i=1, robot.inventorySize()+config.storageStopSlot do
-        if robot.count(i) > 0 then
-            robot.select(i)
-            for e=1, inventory_controller.getInventorySize(sides.down) do
-                if inventory_controller.getStackInSlot(sides.down, e) == nil then
-                    inventory_controller.dropIntoSlot(sides.down, e)
-                    break;
-                end
-            end
-        end
-    end
-    if resume ~= false then
-        gps.resume()
-    end
-    robot.select(selectedSlot)
-end
-
 local function restockAll()
     gps.save()
-    dumpInventory(false)
     restockStick(false)
     charge(false)
     gps.resume()
@@ -110,13 +77,9 @@ end
 
 local function deweed()
     local selectedSlot = robot.select()
-    if fullInventory() then
-        dumpInventory()
-    end
     robot.select(robot.inventorySize()+config.spadeSlot)
     inventory_controller.equip()
     robot.useDown()
-    robot.suckDown()
     inventory_controller.equip()
     robot.select(selectedSlot)
 end
@@ -153,7 +116,6 @@ local function transplant(src, dest)
     gps.go(config.relayFarmlandPos)
     deweed()
     robot.swingDown()
-    robot.suckDown()
 
     inventory_controller.equip()
     gps.resume()
@@ -164,7 +126,6 @@ return {
     needCharge = needCharge,
     charge = charge,
     restockStick = restockStick,
-    dumpInventory = dumpInventory,
     restockAll = restockAll,
     cross = cross,
     deweed = deweed,
