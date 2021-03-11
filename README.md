@@ -20,4 +20,4 @@ farm setup:
 ## To Install
 
     wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/main/install.lua
-    install
+    ./install
