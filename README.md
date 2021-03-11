@@ -25,4 +25,14 @@ Farm setup:
 
 ## To Run
 
-    main
+for crossbreeding automatically:
+
+    autoCrossbreed
+
+for getting more crop from single crop (WIP):
+
+    autoSpread
+
+for min-maxing automatically (WIP):
+
+    autoStat
