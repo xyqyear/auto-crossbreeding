@@ -90,6 +90,9 @@ end
 
 local function restockAll()
     gps.save()
+    if config.takeCareOfDrops then
+        restockStick()
+    end
     restockStick(false)
     charge(false)
     gps.resume()
@@ -109,13 +112,15 @@ end
 
 local function deweed()
     local selectedSlot = robot.select()
-    if fullInventory() then
+    if config.takeCareOfDrops and fullInventory() then
         dumpInventory()
     end
     robot.select(robot.inventorySize()+config.spadeSlot)
     inventory_controller.equip()
     robot.useDown()
-    robot.suckDown()
+    if config.takeCareOfDrops then
+        robot.suckDown()
+    end
     inventory_controller.equip()
     robot.select(selectedSlot)
 end
@@ -150,7 +155,9 @@ local function transplant(src, dest)
     gps.go(config.relayFarmlandPos)
     deweed()
     robot.swingDown()
-    robot.suckDown()
+    if config.takeCareOfDrops then
+        robot.suckDown()
+    end
 
     inventory_controller.equip()
     gps.resume()
