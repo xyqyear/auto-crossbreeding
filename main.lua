@@ -20,7 +20,12 @@ local function breedOnce()
         elseif crop.name == "crop" then
             action.cross()
         elseif crop.isCrop then
-            if crop.name == "weed" or crop.ga > 21 or crop.re > 2 then
+            if crop.name == "weed" or crop.gr > 21 or crop.re > 2 then
+                action.deweed()
+                action.cross()
+            if (not database.existInStorage({name="venomilia"})) and crop.ga > 7 then
+                -- if venomilia does not exist in the storage farm, and ga > 7
+                -- then there is a possibility that the whole farm is going to be destroyed.
                 action.deweed()
                 action.cross()
             elseif crop.name == "venomilia" and crop.gr > 7 then
