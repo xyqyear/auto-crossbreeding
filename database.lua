@@ -61,7 +61,7 @@ local function scanStorage()
     gps.save()
     for slot=1, config.storageFarmSize^2 do
         gps.go(posUtil.storageToGlobal(slot))
-        local cropInfo = scanner.scan("")
+        local cropInfo = scanner.scan()
         if cropInfo.name ~= "air" then
             storage[slot] = cropInfo
             reverseStorage[cropInfo.name] = slot

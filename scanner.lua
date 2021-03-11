@@ -4,13 +4,13 @@ local sides = require("sides")
 
 local function scan()
     local rawResult = geolyzer.analyze(sides.down)
-    if rawResult.name == "minecraft:air" then
+    if rawResult.name == "minecraft:air" or rawResult.name == "GalacticraftCore:tile.brightAir" then
         return {isCrop=false, name="air"}
     elseif rawResult.name == "IC2:blockCrop" then
         if rawResult["crop:name"] == nil then
             return {isCrop=false, name="crop"}
         elseif rawResult["crop:name"] == "weed" then
-            return {isCrop=true, ame="weed"}
+            return {isCrop=true, name="weed"}
         else
             return {
                 isCrop=true,
