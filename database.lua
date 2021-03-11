@@ -3,6 +3,30 @@ local posUtil = require("posUtil")
 local scanner = require("scanner")
 local config = require("config")
 
+--[[
+If you are reading the source code and got confused by the whole "slot" thing,
+here is some explanation:
+So we have two farmlands:
+A storage farm land for storing unseen crops.
+Only one crop per type can exist in the storage farmland.
+A farmland for main crossbreeding things, the crop used for crossbreeding
+and the space for new crops to grow form a checkerboard pattern.
+the slot number for storage farmland start with 1 and from the bottom-right corner of the land,
+and the number increases in a zigzag pattern from right to left. Like this:
+-------
+|9|4|3|
+|8|5|2|
+|7|6|1|
+-------
+And the slot number for the main farmland follow the same rule as the storage farmland,
+but the number increases from left to right. Like this:
+-------
+|3|4|9|
+|2|5|8|
+|1|6|7|
+-------
+]]
+
 local storage = {}
 local reverseStorage = {} -- for a faster lookup of already existing crops
 local farm = {} -- odd slots only
