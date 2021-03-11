@@ -2,7 +2,7 @@
 
 ## Setup
 
-Robot upgrades:
+**Robot upgrades:**
 
 - Inventory Upgrade
 - Inventory Controller Upgrade
@@ -10,13 +10,25 @@ Robot upgrades:
 - Geolyzer (block)
 - Internet Card (if you want to install over internet, not necessary.)
 
-Farm setup:
+**Farm setup:**
+
+Setup for crossbreeding:
+
+![setup for crossbreeding](readme_images/farm-birdview.png)
+
+![the save as above but different view angle](readme_images/farm-normal-view.png)
+
+Setup for min-maxing:
+
+\[WIP\]
+
+Setup for spreading:
 
 \[WIP\]
 
 ## Config
 
-\[WIP\]
+Explanation in config.lua
 
 ## To Install
 
@@ -25,14 +37,14 @@ Farm setup:
 
 ## To Run
 
-for crossbreeding automatically:
+For crossbreeding automatically:
 
     autoCrossbreed
 
-for getting more crop from single crop (WIP):
+For getting more crop from single crop (WIP):
 
     autoSpread
 
-for min-maxing automatically (WIP):
+For min-maxing automatically (WIP):
 
     autoStat
