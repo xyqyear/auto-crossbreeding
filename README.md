@@ -21,3 +21,7 @@ farm setup:
 
     wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/main/install.lua
     ./install
+
+## To Run
+
+    main
