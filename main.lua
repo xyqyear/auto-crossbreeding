@@ -23,6 +23,9 @@ local function breedOnce()
             if crop.name == "weed" or crop.ga > 21 or crop.re > 2 then
                 action.deweed()
                 action.cross()
+            elseif crop.name == "venomilia" and crop.gr > 7 then
+                action.deweed()
+                action.cross()
             else
                 if database.existInStorage(crop) then
                     local suitableSlot = database.findSuitableFarmSlot(crop)
