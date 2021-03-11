@@ -18,7 +18,7 @@ You need to put a spade in the last slot of the robot (if you have multiple inve
 
 You need to put a transvector binder to the second last slot.
 
-The crop sticks will end up in the third slot. You don't need to put them manually. The robot will automatically retrieve them from crop stick container automatically if needed.
+The crop sticks will end up in the third last slot. You don't need to put them manually. The robot will automatically retrieve them from crop stick container automatically if needed.
 
 ![robot inventory](readme_images/robot-inventory.png)
 
