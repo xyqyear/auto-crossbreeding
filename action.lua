@@ -9,6 +9,7 @@ local gps = require("gps")
 local config = require("config")
 local signal = require("signal")
 local scanner = require("scanner")
+local posUtil = require("posUtil")
 
 local function needCharge()
     return computer.energy() / computer.maxEnergy() < config.needChargeLevel
@@ -163,6 +164,16 @@ local function transplant(src, dest)
     robot.select(selectedSlot)
 end
 
+local function destroyAll()
+    for slot=2, config.farmArea, 2 do
+        gps.go(posUtil.farmToGlobal(slot))
+        robot.swingDown()
+        if config.takeCareOfDrops then
+            robot.suckDown()
+        end
+    end
+end
+
 return {
     needCharge = needCharge,
     charge = charge,
@@ -170,5 +181,6 @@ return {
     restockAll = restockAll,
     placeCropStick = placeCropStick,
     deweed = deweed,
-    transplant = transplant
+    transplant = transplant,
+    destroyAll = destroyAll
 }

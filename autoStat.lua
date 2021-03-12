@@ -95,16 +95,6 @@ local function breedOnce()
     return false
 end
 
-local function destroyAll()
-    for slot=2, config.farmSize^2, 2 do
-        gps.go(posUtil.farmToGlobal(slot))
-        robot.swingDown()
-        if config.takeCareOfDrops then
-            robot.suckDown()
-        end
-    end
-end
-
 local function init()
     database.scanFarm()
     if config.keepNewCropWhileMinMaxing then
@@ -121,7 +111,7 @@ local function main()
         action.restockAll()
     end
     gps.go({0,0})
-    destroyAll()
+    action.destroyAll()
     gps.go({0,0})
     if config.takeCareOfDrops then
         action.dumpInventory()

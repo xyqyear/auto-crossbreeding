@@ -73,20 +73,6 @@ local function scanStorage()
     gps.resume()
 end
 
-local function existInStorage(crop)
-    -- I know I can simply write "return reverseStorage[crop.name]"
-    -- But I want the api have a clean return value (alway bool)
-    if reverseStorage[crop.name] then
-        return true
-    else
-        return false
-    end
-end
-
-local function nextStorageSlot()
-    return #storage+1
-end
-
 local function addToStorage(crop)
     storage[#storage+1] = crop
     reverseStorage[crop.name] = #storage
@@ -96,7 +82,7 @@ local function updateFarm(slot, crop)
     farm[slot] = crop
 end
 
-function nextMultifarmPos()
+local function nextMultifarmPos()
     -- if no more space avaliable, return nil.
     local x = lastMultifarmPos[1]
     local y = lastMultifarmPos[2]
@@ -136,8 +122,37 @@ function nextMultifarmPos()
     end
 end
 
-function updateMultifarm(pos)
+local function updateMultifarm(pos)
     lastMultifarmPos = pos
+end
+
+local function scanMultifarm()
+    gps.save()
+    while true do
+        local pos = nextMultifarmPos()
+        gps.go(pos)
+        local cropInfo = scanner.scan()
+        if cropInfo.name == "air" then
+            updateMultifarm(pos)
+        else
+            break
+        end
+    end
+    gps.resume()
+end
+
+local function existInStorage(crop)
+    -- I know I can simply write "return reverseStorage[crop.name]"
+    -- But I want the api have a clean return value (alway bool)
+    if reverseStorage[crop.name] then
+        return true
+    else
+        return false
+    end
+end
+
+local function nextStorageSlot()
+    return #storage+1
 end
 
 return {
@@ -145,6 +160,7 @@ return {
     getFarm = getFarm,
     scanFarm = scanFarm,
     scanStorage = scanStorage,
+    scanMultifarm = scanMultifarm,
     existInStorage = existInStorage,
     nextStorageSlot = nextStorageSlot,
     addToStorage = addToStorage,
