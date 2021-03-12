@@ -30,7 +30,7 @@ Setup for crossbreeding:
 
 Setup for min-maxing:
 
-\[WIP\]
+The setup is pretty much the save except you don't need the 13*13 farmland on the left
 
 Setup for spreading:
 
@@ -55,6 +55,6 @@ For getting more crop from single crop (WIP):
 
     autoSpread
 
-For min-maxing automatically (WIP):
+For min-maxing automatically:
 
     autoStat
