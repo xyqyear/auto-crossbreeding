@@ -97,10 +97,10 @@ local function breedOnce()
     return false
 end
 
-local function destroyAll()
+local function destroyWeed()
     for slot=2, config.farmSize^2, 2 do
         gps.go(posUtil.farmToGlobal(slot))
-        robot.swingDoen()
+        robot.swingDown()
         if config.takeCareOfDrops then
             robot.suckDown()
         end
@@ -123,7 +123,7 @@ local function main()
         action.restockAll()
     end
     gps.go({0,0})
-    destroyAll()
+    destroyWeed()
     gps.go({0,0})
     if config.takeCareOfDrops then
         action.dumpInventory()
