@@ -1,3 +1,5 @@
+local robot = require("robot")
+
 local gps = require("gps")
 local action = require("action")
 local database = require("database")
@@ -95,6 +97,16 @@ local function breedOnce()
     return false
 end
 
+local function destroyAll()
+    for slot=2, config.farmSize^2, 2 do
+        gps.go(posUtil.farmToGlobal(slot))
+        robot.swingDoen()
+        if config.takeCareOfDrops then
+            robot.suckDown()
+        end
+    end
+end
+
 local function init()
     database.scanFarm()
     if config.keepNewCropWhileMinMaxing then
@@ -106,15 +118,18 @@ end
 
 local function main()
     init()
-    while true do
-        if breedOnce() then
-            break
-        end
+    while not breedOnce() do
         gps.go({0,0})
         action.restockAll()
     end
     gps.go({0,0})
-    print("done.")
+    destroyAll()
+    gps.go({0,0})
+    if config.takeCareOfDrops then
+        action.dumpInventory()
+    end
+    gps.turnTo(1)
+    print("Done.\nAll crops are now 21/31/0")
 end
 
 main()
