@@ -18,7 +18,7 @@ local function spreadOnce()
               (crop.name == "venomilia" and crop.gr > 7) then
                 action.deweed()
                 action.placeCropStick()
-            elseif crop.name == database.getFarm()[1].name then
+            elseif crop.name == database.getFarm()[1].name and crop.gr >= 21 and crop.ga == 31 then
                 local nextMultifarmPos = database.nextMultifarmPos()
                 if nextMultifarmPos then
                     action.transplant(posUtil.farmToGlobal(slot), nextMultifarmPos)
