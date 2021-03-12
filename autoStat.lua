@@ -62,9 +62,8 @@ local function breedOnce()
         gps.go(posUtil.farmToGlobal(slot))
         local crop = scanner.scan()
         if crop.name == "air" then
-            action.placeCropStick()
-            action.placeCropStick()
-        elseif crop.name == "crop" then
+            action.placeCropStick(2)
+        elseif (not config.assumeNoBareStick) and crop.name == "crop" then
             action.placeCropStick()
         elseif crop.isCrop then
             if crop.name == "weed" or crop.gr > 21 or
@@ -78,15 +77,13 @@ local function breedOnce()
                     action.placeCropStick()
                 else
                     action.transplant(posUtil.farmToGlobal(slot), posUtil.farmToGlobal(suitableSlot))
-                    action.placeCropStick()
-                    action.placeCropStick()
+                    action.placeCropStick(2)
                     database.updateFarm(suitableSlot, crop)
                     updateLowest()
                 end
             elseif config.keepNewCropWhileMinMaxing and (not database.existInStorage(crop)) then
                 action.transplant(posUtil.farmToGlobal(slot), posUtil.storageToGlobal(database.nextStorageSlot()))
-                action.placeCropStick()
-                action.placeCropStick()
+                action.placeCropStick(2)
                 database.addToStorage(crop)
             else
                 action.deweed()

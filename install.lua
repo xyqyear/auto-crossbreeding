@@ -1,11 +1,18 @@
 local shell = require("shell")
-shell.execute("wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/main/action.lua")
-shell.execute("wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/main/config.lua")
-shell.execute("wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/main/database.lua")
-shell.execute("wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/main/gps.lua")
-shell.execute("wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/main/posUtil.lua")
-shell.execute("wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/main/scanner.lua")
-shell.execute("wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/main/signal.lua")
-shell.execute("wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/main/autoStat.lua")
-shell.execute("wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/main/autoCrossbreed.lua")
-shell.execute("wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/main/autoSpread.lua")
+local args = {...}
+local branch
+if #args == 0 then
+    branch = "main"
+else
+    branch = args[1]
+end
+shell.execute("wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/"..branch.."/action.lua")
+shell.execute("wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/"..branch.."/config.lua")
+shell.execute("wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/"..branch.."/database.lua")
+shell.execute("wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/"..branch.."/gps.lua")
+shell.execute("wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/"..branch.."/posUtil.lua")
+shell.execute("wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/"..branch.."/scanner.lua")
+shell.execute("wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/"..branch.."/signal.lua")
+shell.execute("wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/"..branch.."/autoStat.lua")
+shell.execute("wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/"..branch.."/autoCrossbreed.lua")
+shell.execute("wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/"..branch.."/autoSpread.lua")

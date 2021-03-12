@@ -18,10 +18,6 @@ local function fullyCharged()
     return computer.energy() / computer.maxEnergy() > 0.99
 end
 
-local function needMoreStick()
-    return robot.count(robot.inventorySize()+config.stickSlot) < 2
-end
-
 local function fullInventory()
     for i=1, robot.inventorySize() do
         if robot.count(i) == 0 then
@@ -91,21 +87,26 @@ end
 local function restockAll()
     gps.save()
     if config.takeCareOfDrops then
-        restockStick()
+        dumpInventory()
     end
     restockStick(false)
     charge(false)
     gps.resume()
 end
 
-local function placeCropStick()
+local function placeCropStick(count)
+    if count == nil then
+        count = 1
+    end
     local selectedSlot = robot.select()
-    if needMoreStick() then
+    if robot.count(robot.inventorySize()+config.stickSlot) < count then
         restockStick()
     end
     robot.select(robot.inventorySize()+config.stickSlot)
     inventory_controller.equip()
-    robot.useDown()
+    for _=1, count do
+        robot.useDown()
+    end
     inventory_controller.equip()
     robot.select(selectedSlot)
 end

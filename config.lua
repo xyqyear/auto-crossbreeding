@@ -40,4 +40,7 @@ return {
     -- if you turn on this flag, you need to prepare a storage farm
     -- the recommend size is 13, which you change above.
     keepNewCropWhileMinMaxing = false,
+
+    -- assume there is no bare stick in the farm, should increace speed.
+    assumeNoBareStick = true,
 }
