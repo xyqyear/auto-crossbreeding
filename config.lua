@@ -1,4 +1,4 @@
-return {
+config = {
     -- be aware that each config should be followed by a comma
 
     -- the side length of the crossbreeding farm
@@ -44,3 +44,8 @@ return {
     -- assume there is no bare stick in the farm, should increace speed.
     assumeNoBareStick = true,
 }
+
+config.farmArea = config.farmSize^2
+config.storageFarmArea = config.storageFarmSize^2
+
+return config

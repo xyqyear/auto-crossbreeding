@@ -41,7 +41,7 @@ end
 
 local function scanFarm()
     gps.save()
-    for slot=1, config.farmSize^2, 2 do
+    for slot=1, config.farmArea, 2 do
         gps.go(posUtil.farmToGlobal(slot))
         local cropInfo = scanner.scan()
         if cropInfo.name == "air" then
@@ -59,7 +59,7 @@ end
 
 local function scanStorage()
     gps.save()
-    for slot=1, config.storageFarmSize^2 do
+    for slot=1, config.storageFarmArea do
         gps.go(posUtil.storageToGlobal(slot))
         local cropInfo = scanner.scan()
         if cropInfo.name ~= "air" then

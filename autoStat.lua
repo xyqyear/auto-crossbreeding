@@ -9,12 +9,14 @@ local config = require("config")
 
 local lowestStat
 local lowestStatSlot
+local nearestReplacableSlot
 
 local function updateLowest()
     lowestStat = 64
     lowestStatSlot = 0
     local farm = database.getFarm()
-    for slot=1, config.farmSize^2, 2 do
+    local workingCrop = database.getFarm()[1].name
+    for slot=1, config.farmArea, 2 do
         local crop = farm[slot]
         if crop ~= nil then
             local stat = crop.gr+crop.ga-crop.re
@@ -24,10 +26,23 @@ local function updateLowest()
             end
         end
     end
+
+    nearestReplacableSlot = config.farmArea + 1
+    for slot=1, config.farmArea, 2 do
+        local crop = farm[slot]
+        if crop.name == workingCrop then
+            local pos = posUtil.farmToGlobal(slot)
+            if pos[1] + pos[2] < nearestReplacableSlot then
+                nearestReplacableSlot = slot
+            end
+        end
+    end
 end
 
 local function findSuitableFarmSlot(crop)
-    if crop.gr+crop.ga-crop.re > lowestStat then
+    if nearestReplacableSlot <= config.farmArea then
+        return nearestReplacableSlot
+    elseif crop.gr+crop.ga-crop.re > lowestStat then
         return lowestStatSlot
     else
         return 0

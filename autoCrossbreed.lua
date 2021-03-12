@@ -16,9 +16,8 @@ local function updateLowest()
     lowestStat = 64
     lowestStatSlot = 0
     local farm = database.getFarm()
-    local farmArea = config.farmSize^2
     -- pairs() is slower than numeric for due to function call overhead.
-    for slot=1, farmArea, 2 do
+    for slot=1, config.farmArea, 2 do
         local crop = farm[slot]
         if crop ~= nil then
             if crop.tier < lowestTier then
@@ -27,7 +26,7 @@ local function updateLowest()
             end
         end
     end
-    for slot=1, farmArea, 2 do
+    for slot=1, config.farmArea, 2 do
         local crop = farm[slot]
         if crop ~= nil then
             if crop.tier == lowestTier then
@@ -56,7 +55,7 @@ local function findSuitableFarmSlot(crop)
 end
 
 local function breedOnce()
-    for slot=2, config.farmSize^2, 2 do
+    for slot=2, config.farmArea, 2 do
         gps.go(posUtil.farmToGlobal(slot))
         local crop = scanner.scan()
         if crop.name == "air" then
