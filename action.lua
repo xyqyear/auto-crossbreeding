@@ -98,7 +98,7 @@ local function restockAll()
     gps.resume()
 end
 
-local function cross()
+local function placeCropStick()
     local selectedSlot = robot.select()
     if needMoreStick() then
         restockStick()
@@ -143,7 +143,7 @@ local function transplant(src, dest)
     robot.useDown(sides.down)
     gps.go(dest)
     if scanner.scan().name == "air" then
-        cross()
+        placeCropStick()
     end
     robot.useDown(sides.down, true)
     gps.go(config.dislocatorPos)
@@ -167,7 +167,7 @@ return {
     charge = charge,
     restockStick = restockStick,
     restockAll = restockAll,
-    cross = cross,
+    placeCropStick = placeCropStick,
     deweed = deweed,
     transplant = transplant
 }

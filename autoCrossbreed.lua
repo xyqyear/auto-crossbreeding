@@ -78,32 +78,32 @@ local function breedOnce()
         gps.go(posUtil.farmToGlobal(slot))
         local crop = scanner.scan()
         if crop.name == "air" then
-            action.cross()
-            action.cross()
+            action.placeCropStick()
+            action.placeCropStick()
         elseif crop.name == "crop" then
-            action.cross()
+            action.placeCropStick()
         elseif crop.isCrop then
             if crop.name == "weed" or crop.gr > 21 or
               (crop.name == "venomilia" and crop.ga > 7) then
                 action.deweed()
-                action.cross()
+                action.placeCropStick()
             else
                 if database.existInStorage(crop) then
                     local suitableSlot = findSuitableFarmSlot(crop)
                     if suitableSlot == 0 or crop.re > 0 then
                         action.deweed()
-                        action.cross()
+                        action.placeCropStick()
                     else
                         action.transplant(posUtil.farmToGlobal(slot), posUtil.farmToGlobal(suitableSlot))
-                        action.cross()
-                        action.cross()
+                        action.placeCropStick()
+                        action.placeCropStick()
                         database.updateFarm(suitableSlot, crop)
                         updateLowest()
                     end
                 else
                     action.transplant(posUtil.farmToGlobal(slot), posUtil.storageToGlobal(database.nextStorageSlot()))
-                    action.cross()
-                    action.cross()
+                    action.placeCropStick()
+                    action.placeCropStick()
                     database.addToStorage(crop)
                 end
             end
