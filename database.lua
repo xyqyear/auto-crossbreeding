@@ -30,6 +30,7 @@ but the number increases from left to right. Like this:
 local storage = {}
 local reverseStorage = {} -- for a faster lookup of already existing crops
 local farm = {} -- odd slots only
+local lastMultifarmPos = {-1, -1}
 
 local function getStorage()
     return storage
@@ -95,6 +96,50 @@ local function updateFarm(slot, crop)
     farm[slot] = crop
 end
 
+function nextMultifarmPos()
+    -- if no more space avaliable, return nil.
+    local x = lastMultifarmPos[1]
+    local y = lastMultifarmPos[2]
+    local direction
+    if x % 2 == 1 then
+        direction = 1
+    else
+        direction = -1
+    end
+
+    y = y + direction
+    if posUtil.posInMultifarm({x, y}) then
+        return {x, y}
+    end
+
+    if posUtil.posInMiddleOfMultifarm({x, y}) then
+        repeat
+            y = y + direction
+        until not posUtil.posInMiddleOfMultifarm({x, y})
+        return {x, y}
+    end
+
+    x = x - 1
+    if posUtil.posInMultifarm({x, y}) then
+        return {x, y}
+    end
+
+    direction = direction * -1
+    y =y + direction
+    if posUtil.posInMultifarm({x, y}) then
+        return {x, y}
+    end
+
+    y = y + direction
+    if posUtil.posInMultifarm({x, y}) then
+        return {x, y}
+    end
+end
+
+function updateMultifarm(pos)
+    lastMultifarmPos = pos
+end
+
 return {
     getStorage = getStorage,
     getFarm = getFarm,
@@ -103,5 +148,7 @@ return {
     existInStorage = existInStorage,
     nextStorageSlot = nextStorageSlot,
     addToStorage = addToStorage,
-    updateFarm = updateFarm
+    updateFarm = updateFarm,
+    nextMultifarmPos = nextMultifarmPos,
+    updateMultifarm = updateMultifarm
 }

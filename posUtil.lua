@@ -40,9 +40,35 @@ local function storageToGlobal(storageSlot)
     return globalPos
 end
 
+local function multifarmPosInFarm(pos)
+    local absX = math.abs(pos[1])
+    local absY = math.abs(pos[2])
+    return (absX + absY) < 21 and (absX > 2 or absY > 2) and absX < 19 and absY < 19
+end
+
+local function multifarmPosInMiddle(pos)
+    return math.abs(pos[1]) < 3 and math.abs(pos[2]) < 3
+end
+
+local function globalPosToMultifarmPos(pos)
+    return {pos[1]+19, pos[2]-2}
+end
+
+local function posInMultifarm(pos)
+    -- function calls in lua are expensive
+    -- only do this for the sake of clarity
+    return multifarmPosInFarm(globalPosToMultifarmPos(pos))
+end
+
+local function posInMiddleOfMultifarm(pos)
+    return multifarmPosInMiddle(globalPosToMultifarmPos(pos))
+end
+
 return {
     globalToFarm = globalToFarm,
     farmToGlobal = farmToGlobal,
     globalToStorage = globalToStorage,
-    storageToGlobal = storageToGlobal
+    storageToGlobal = storageToGlobal,
+    posInMultifarm = posInMultifarm,
+    posInMiddleOfMultifarm = posInMiddleOfMultifarm
 }
