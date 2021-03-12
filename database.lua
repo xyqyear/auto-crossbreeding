@@ -133,9 +133,9 @@ local function scanMultifarm()
         gps.go(pos)
         local cropInfo = scanner.scan()
         if cropInfo.name == "air" then
-            updateMultifarm(pos)
-        else
             break
+        else
+            updateMultifarm(pos)
         end
     end
     gps.resume()
