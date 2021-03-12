@@ -15,7 +15,7 @@ local function updateLowest()
     lowestStat = 64
     lowestStatSlot = 0
     local farm = database.getFarm()
-    local workingCrop = database.getFarm()[1].name
+    local workingCropName = database.getFarm()[1].name
     for slot=1, config.farmArea, 2 do
         local crop = farm[slot]
         if crop ~= nil then
@@ -30,9 +30,9 @@ local function updateLowest()
     nearestReplacableSlot = config.farmArea + 1
     for slot=1, config.farmArea, 2 do
         local crop = farm[slot]
-        if crop.name == workingCrop then
+        if crop ~= nil and crop.name ~= workingCropName then
             local pos = posUtil.farmToGlobal(slot)
-            if pos[1] + pos[2] < nearestReplacableSlot then
+            if (pos[1] + pos[2]) < nearestReplacableSlot then
                 nearestReplacableSlot = slot
             end
         end
