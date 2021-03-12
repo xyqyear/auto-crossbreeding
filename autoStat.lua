@@ -7,54 +7,37 @@ local scanner = require("scanner")
 local posUtil = require("posUtil")
 local config = require("config")
 
-local lowestGr
-local lowestGrSlot
-local lowestGa
-local lowestGaSlot
+local lowestStat
+local lowestStatSlot
 
 local function updateLowest()
-    lowestGr = 100
-    lowestGrSlot = 0
-    lowestGa = 100
-    lowestGaSlot = 0
+    lowestStat = 64
+    lowestStatSlot = 0
     local farm = database.getFarm()
-    local farmArea = config.farmSize^2
-    for slot=1, farmArea, 2 do
+    for slot=1, config.farmSize^2, 2 do
         local crop = farm[slot]
         if crop ~= nil then
-            if crop.gr < lowestGr then
-                lowestGr = crop.gr
-                lowestGrSlot = slot
-            end
-        end
-    end
-    for slot=1, farmArea, 2 do
-        local crop = farm[slot]
-        if crop ~= nil then
-            if crop.gr == lowestGr then
-                if crop.ga < lowestGa then
-                    lowestGa = crop.ga
-                    lowestGaSlot = slot
-                end
+            local stat = crop.gr+crop.ga
+            if stat < lowestStat then
+                lowestStat = stat
+                lowestStatSlot = slot
             end
         end
     end
 end
 
 local function findSuitableFarmSlot(crop)
-    if crop.gr > lowestGr then
-        return lowestGrSlot
-    elseif crop.gr == lowestGr then
-        if crop.ga > lowestGa then
-            return lowestGaSlot
-        end
+    if crop.gr+crop.ga > lowestStat then
+        return lowestStatSlot
+    else
+        return 0
     end
-    return 0
 end
 
 local function breedOnce()
     -- return true if all stats are maxed out
-    if lowestGr == 21 and lowestGa == 31 then
+    -- 52 = 21(max gr) + 31(max ga)
+    if lowestStat == 52 then
         return true
     end
 

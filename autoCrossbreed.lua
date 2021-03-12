@@ -7,18 +7,14 @@ local config = require("config")
 
 local lowestTier
 local lowestTierSlot
-local lowestGr
-local lowestGrSlot
-local lowestGa
-local lowestGaSlot
+local lowestStat
+local lowestStatSlot
 
 local function updateLowest()
-    lowestTier = 100
+    lowestTier = 64
     lowestTierSlot = 0
-    lowestGr = 100
-    lowestGrSlot = 0
-    lowestGa = 100
-    lowestGaSlot = 0
+    lowestStat = 64
+    lowestStatSlot = 0
     local farm = database.getFarm()
     local farmArea = config.farmSize^2
     -- pairs() is slower than numeric for due to function call overhead.
@@ -35,20 +31,10 @@ local function updateLowest()
         local crop = farm[slot]
         if crop ~= nil then
             if crop.tier == lowestTier then
-                if crop.gr < lowestGr then
-                    lowestGr = crop.gr
-                    lowestGrSlot = slot
-                end
-            end
-        end
-    end
-    for slot=1, farmArea, 2 do
-        local crop = farm[slot]
-        if crop ~= nil then
-            if crop.tier == lowestTier and crop.gr == lowestGr then
-                if crop.ga < lowestGa then
-                    lowestGa = crop.ga
-                    lowestGaSlot = slot
+                local stat = crop.gr+crop.ga
+                if stat < lowestStat then
+                    lowestStat = stat
+                    lowestStatSlot = slot
                 end
             end
         end
@@ -62,12 +48,8 @@ local function findSuitableFarmSlot(crop)
     if crop.tier > lowestTier then
         return lowestTierSlot
     elseif crop.tier == lowestTier then
-        if crop.gr > lowestGr then
-            return lowestGrSlot
-        elseif crop.gr == lowestGr then
-            if crop.ga > lowestGa then
-                return lowestGaSlot
-            end
+        if crop.gr+crop.ga > lowestStat then
+            return lowestStatSlot
         end
     end
     return 0
