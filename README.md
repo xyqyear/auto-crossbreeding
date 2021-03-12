@@ -14,7 +14,7 @@
 
 You need to put a spade in the last slot of the robot (if you have multiple inventory upgrades, you may scroll down to reach the last slot.)
 
-You need to put a transvector binder to the second last slot.
+You need to put a transvector binder in the second last slot.
 
 The crop sticks will end up in the third last slot. You don't need to put them manually. The robot will automatically retrieve them from crop stick container automatically if needed.
 
@@ -30,7 +30,7 @@ Setup for crossbreeding:
 
 Setup for min-maxing:
 
-The setup is pretty much the save except you don't need the 13*13 farmland on the left
+The setup is pretty much the same except you don't need the 13*13 farmland on the left
 
 Setup for spreading:
 
