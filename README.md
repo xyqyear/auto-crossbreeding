@@ -1,7 +1,5 @@
 # auto-crossbreeding
 
-***Sometimes transvector dislocator would stop working and transport itself. DO NOT REPORT THIS AS AN ISSUE. I'm pretty aware of it.***
-
 ## Setup
 
 **Robot upgrades:**
