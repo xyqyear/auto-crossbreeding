@@ -112,7 +112,8 @@ local function breedOnce()
 end
 
 local function init()
-    database.scanAll()
+    database.scanFarm()
+    database.scanStorage()
     updateLowest()
     action.restockAll()
 end

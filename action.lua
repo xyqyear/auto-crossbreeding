@@ -133,21 +133,19 @@ local function transplant(src, dest)
 
     -- transfer the crop to the relay location
     gps.go(config.dislocatorPos)
-    robot.useDown()
+    robot.useDown(sides.down)
     gps.go(src)
-    robot.useDown()
-    robot.useDown() -- in case the first use is to harvest the crop
+    robot.useDown(sides.down, true) -- sneak-right-click on crops to prevent harvesting
     gps.go(config.dislocatorPos)
     signal.pulseDown()
 
     -- transfer the crop to the destination
-    robot.useDown()
+    robot.useDown(sides.down)
     gps.go(dest)
     if scanner.scan().name == "air" then
         cross()
     end
-    robot.useDown()
-    robot.useDown() -- because why not
+    robot.useDown(sides.down, true)
     gps.go(config.dislocatorPos)
     signal.pulseDown()
 

@@ -72,11 +72,6 @@ local function scanStorage()
     gps.resume()
 end
 
-local function scanAll()
-    scanFarm()
-    scanStorage()
-end
-
 local function existInStorage(crop)
     -- I know I can simply write "return reverseStorage[crop.name]"
     -- But I want the api have a clean return value (alway bool)
@@ -103,7 +98,8 @@ end
 return {
     getStorage = getStorage,
     getFarm = getFarm,
-    scanAll = scanAll,
+    scanFarm = scanFarm,
+    scanStorage = scanStorage,
     existInStorage = existInStorage,
     nextStorageSlot = nextStorageSlot,
     addToStorage = addToStorage,
