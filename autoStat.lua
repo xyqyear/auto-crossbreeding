@@ -17,7 +17,7 @@ local function updateLowest()
     for slot=1, config.farmSize^2, 2 do
         local crop = farm[slot]
         if crop ~= nil then
-            local stat = crop.gr+crop.ga
+            local stat = crop.gr+crop.ga-crop.re
             if stat < lowestStat then
                 lowestStat = stat
                 lowestStatSlot = slot
@@ -27,7 +27,7 @@ local function updateLowest()
 end
 
 local function findSuitableFarmSlot(crop)
-    if crop.gr+crop.ga > lowestStat then
+    if crop.gr+crop.ga-crop.re > lowestStat then
         return lowestStatSlot
     else
         return 0
@@ -36,7 +36,7 @@ end
 
 local function breedOnce()
     -- return true if all stats are maxed out
-    -- 52 = 21(max gr) + 31(max ga)
+    -- 52 = 21(max gr) + 31(max ga) - 0 (min re)
     if lowestStat == 52 then
         return true
     end
@@ -50,12 +50,12 @@ local function breedOnce()
             action.placeCropStick()
         elseif crop.isCrop then
             if crop.name == "weed" or crop.gr > 21 or
-              (crop.name == "venomilia" and crop.ga > 7) then
+              (crop.name == "venomilia" and crop.gr > 7) then
                 action.deweed()
                 action.placeCropStick()
             elseif crop.name == database.getFarm()[1].name then
                 local suitableSlot = findSuitableFarmSlot(crop)
-                if suitableSlot == 0 or crop.re > 0 then
+                if suitableSlot == 0 then
                     action.deweed()
                     action.placeCropStick()
                 else

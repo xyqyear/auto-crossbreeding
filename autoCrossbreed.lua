@@ -31,7 +31,7 @@ local function updateLowest()
         local crop = farm[slot]
         if crop ~= nil then
             if crop.tier == lowestTier then
-                local stat = crop.gr+crop.ga
+                local stat = crop.gr+crop.ga-crop.re
                 if stat < lowestStat then
                     lowestStat = stat
                     lowestStatSlot = slot
@@ -48,7 +48,7 @@ local function findSuitableFarmSlot(crop)
     if crop.tier > lowestTier then
         return lowestTierSlot
     elseif crop.tier == lowestTier then
-        if crop.gr+crop.ga > lowestStat then
+        if crop.gr+crop.ga-crop.re > lowestStat then
             return lowestStatSlot
         end
     end
@@ -65,13 +65,13 @@ local function breedOnce()
             action.placeCropStick()
         elseif crop.isCrop then
             if crop.name == "weed" or crop.gr > 21 or
-              (crop.name == "venomilia" and crop.ga > 7) then
+              (crop.name == "venomilia" and crop.gr > 7) then
                 action.deweed()
                 action.placeCropStick()
             else
                 if database.existInStorage(crop) then
                     local suitableSlot = findSuitableFarmSlot(crop)
-                    if suitableSlot == 0 or crop.re > 0 then
+                    if suitableSlot == 0 then
                         action.deweed()
                         action.placeCropStick()
                     else
