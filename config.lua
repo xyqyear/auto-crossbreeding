@@ -20,6 +20,7 @@ config = {
     -- the coordinate for the transvector dislocator
     dislocatorPos = {0, 3},
     -- the coordinate for the container to store seeds, products, etc
+    -- has no effect unless you turn on "takeCareOfDrops" flag.
     storagePos = {0, 5},
 
     -- the slot for spade, count from 0, count from bottom-right to top-left
