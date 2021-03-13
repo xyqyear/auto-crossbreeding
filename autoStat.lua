@@ -1,11 +1,11 @@
-local robot = require("robot")
-
 local gps = require("gps")
 local action = require("action")
 local database = require("database")
 local scanner = require("scanner")
 local posUtil = require("posUtil")
 local config = require("config")
+
+local args = {...}
 
 local lowestStat
 local lowestStatSlot
@@ -111,8 +111,10 @@ local function main()
         action.restockAll()
     end
     gps.go({0,0})
-    action.destroyAll()
-    gps.go({0,0})
+    if #args == 1 and args[1] == "docleanup" then
+        action.destroyAll()
+        gps.go({0,0})
+    end
     if config.takeCareOfDrops then
         action.dumpInventory()
     end

@@ -59,4 +59,4 @@ For getting more crop from single crop (WIP):
 
 For min-maxing automatically:
 
-    autoStat
+    autoStat docleanup
