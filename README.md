@@ -47,6 +47,16 @@ Explanation in config.lua
     wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/main/install.lua
     ./install
 
+If you run ./install after the installation, it will update all the files except for config.lua
+
+If you want to update config.lua also, you can run:
+
+    ./install main updateconfig
+
+If you want to install dev branch, you can run:
+
+    ./install dev
+
 ## To Run
 
 For crossbreeding automatically:
