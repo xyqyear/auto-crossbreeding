@@ -196,7 +196,7 @@ local function transplantToMultifarm(src, dest)
     gps.go(dislocatorPos)
     signal.pulseDown()
 
-    if not (relayFarmlandPos[1] == dest[1] and relayFarmlandPos[2] == dest[2]) then
+    if not (relayFarmlandPos[1] == globalDest[1] and relayFarmlandPos[2] == globalDest[2]) then
         -- transfer the crop to the destination
         robot.useDown(sides.down)
         gps.go(globalDest)
