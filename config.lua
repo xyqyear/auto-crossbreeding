@@ -1,4 +1,4 @@
-config = {
+local config = {
     -- be aware that each config should be followed by a comma
 
     -- the side length of the crossbreeding farm
