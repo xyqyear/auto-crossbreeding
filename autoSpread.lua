@@ -21,7 +21,7 @@ local function spreadOnce()
             elseif crop.name == database.getFarm()[1].name and crop.gr >= 21 and crop.ga == 31 then
                 local nextMultifarmPos = database.nextMultifarmPos()
                 if nextMultifarmPos then
-                    action.transplant(posUtil.farmToGlobal(slot), nextMultifarmPos)
+                    action.transplantToMultifarm(posUtil.farmToGlobal(slot), nextMultifarmPos)
                     action.placeCropStick(2)
                     database.updateMultifarm(nextMultifarmPos)
                 else

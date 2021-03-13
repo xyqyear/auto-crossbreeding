@@ -100,7 +100,7 @@ local function placeCropStick(count)
         count = 1
     end
     local selectedSlot = robot.select()
-    if robot.count(robot.inventorySize()+config.stickSlot) < count then
+    if robot.count(robot.inventorySize()+config.stickSlot) < count + 1 then
         restockStick()
     end
     robot.select(robot.inventorySize()+config.stickSlot)
@@ -172,6 +172,11 @@ local function transplantToMultifarm(src, dest)
 
     local selectedSlot = robot.select()
     gps.save()
+
+    if robot.count(robot.inventorySize()+config.stickSlot) < 2 then
+        restockStick()
+    end
+
     robot.select(robot.inventorySize()+config.binderSlot)
     inventory_controller.equip()
 
