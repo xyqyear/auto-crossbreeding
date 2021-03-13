@@ -44,6 +44,11 @@ local config = {
     -- the recommend size is 13, which you change above.
     keepNewCropWhileMinMaxing = false,
 
+    -- if you turn on this flag, the robot will only choose the crop with
+    -- gr > 21, < 24, ga == 31, re == 0 to spread.
+    -- helpful while debuging.
+    bestStatWhileSpreading = true,
+
     -- assume there is no bare stick in the farm, should increace speed.
     assumeNoBareStick = true,
 
