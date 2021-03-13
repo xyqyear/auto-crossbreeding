@@ -24,6 +24,8 @@ The crop sticks will end up in the third last slot. You don't need to put them m
 
 Setup for crossbreeding:
 
+***The setup below is outdated, you should check the config file to see where you should put machines and containers.***
+
 ![setup for crossbreeding](readme_images/farm-birdview.png)
 
 ![the save as above but different view angle](readme_images/farm-normal-view.png)

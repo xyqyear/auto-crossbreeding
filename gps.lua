@@ -78,6 +78,24 @@ local function go(pos)
     nowPos = pos
 end
 
+local function down(distance)
+    if distance == nil then
+        distance = 1
+    end
+    for _=1, distance do
+        robot.down()
+    end
+end
+
+local function up(distance)
+    if distance == nil then
+        distance = 1
+    end
+    for _=1, distance do
+        robot.up()
+    end
+end
+
 local function save()
     savedPos[#savedPos+1] = nowPos
 end
@@ -96,5 +114,7 @@ return {
     turnTo = turnTo,
     go = go,
     save = save,
-    resume = resume
+    resume = resume,
+    down = down,
+    up = up
 }

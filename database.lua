@@ -30,7 +30,9 @@ but the number increases from left to right. Like this:
 local storage = {}
 local reverseStorage = {} -- for a faster lookup of already existing crops
 local farm = {} -- odd slots only
-local lastMultifarmPos = {-1, -1}
+-- the center of this pos is the center of the multifarm.
+-- you can find functions in posUtil to translate it to global pos.
+local lastMultifarmPos = {0, 0}
 
 local function getStorage()
     return storage
@@ -83,42 +85,39 @@ local function updateFarm(slot, crop)
 end
 
 local function nextMultifarmPos()
-    -- if no more space avaliable, return nil.
     local x = lastMultifarmPos[1]
     local y = lastMultifarmPos[2]
-    local direction
-    if x % 2 == 1 then
-        direction = 1
+
+    if posUtil.multifarmPosIsRelayFarmland(lastMultifarmPos) then
+        return posUtil.nextRelayFarmland(lastMultifarmPos)
+    end
+
+    local d = math.abs(x) + math.abs(y)
+    local nextPossiblePos
+
+    if x == 0 and y == 0 then
+        nextPossiblePos = {0, 4}
+    elseif x == -1 and y == d - 1 then
+        if d == config.multifarmSize then
+            return posUtil.nextRelayFarmland()
+        else
+            nextPossiblePos = {0, d+1}
+        end
+    elseif x >= 0 and y > 0 then
+        nextPossiblePos = {x+1, y-1}
+    elseif x > 0 and y <= 0 then
+        nextPossiblePos = {x-1, y-1}
+    elseif x <= 0 and y < 0 then
+        nextPossiblePos = {x-1, y+1}
+    elseif x < 0 and y >= 0 then
+        nextPossiblePos = {x+1, y+1}
+    end
+
+    if posUtil.multifarmPosIsRelayFarmland(nextPossiblePos) or not posUtil.multifarmPosInFarm(nextPossiblePos) then
+        lastMultifarmPos = nextPossiblePos
+        return nextMultifarmPos()
     else
-        direction = -1
-    end
-
-    y = y + direction
-    if posUtil.posInMultifarm({x, y}) then
-        return {x, y}
-    end
-
-    if posUtil.posInMiddleOfMultifarm({x, y}) then
-        repeat
-            y = y + direction
-        until not posUtil.posInMiddleOfMultifarm({x, y})
-        return {x, y}
-    end
-
-    x = x - 1
-    if posUtil.posInMultifarm({x, y}) then
-        return {x, y}
-    end
-
-    direction = direction * -1
-    y =y + direction
-    if posUtil.posInMultifarm({x, y}) then
-        return {x, y}
-    end
-
-    y = y + direction
-    if posUtil.posInMultifarm({x, y}) then
-        return {x, y}
+        return nextPossiblePos
     end
 end
 
@@ -128,16 +127,21 @@ end
 
 local function scanMultifarm()
     gps.save()
+    gps.go(config.elevatorPos)
+    gps.down(3)
     while true do
-        local pos = nextMultifarmPos()
-        gps.go(pos)
+        local nextPos = nextMultifarmPos()
+        local nextGlobalPos = posUtil.multifarmPosToGlobalPos(nextPos)
+        gps.go(nextGlobalPos)
         local cropInfo = scanner.scan()
         if cropInfo.name == "air" then
             break
         else
-            updateMultifarm(pos)
+            updateMultifarm(nextPos)
         end
     end
+    gps.go(config.elevatorPos)
+    gps.up(3)
     gps.resume()
 end
 
