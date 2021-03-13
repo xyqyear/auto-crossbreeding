@@ -78,12 +78,11 @@ end
 
 local function findOptimalDislocator(pos)
     -- return: {dislocatorGlobalPos, relayFarmlandGlobalPos}
-    local mPos = globalPosToMultifarmPos(pos)
     local minDistance = 100
     local minPosI
     for i = 1, #config.multifarmDislocatorPoses do
         local rPos = config.multifarmDislocatorPoses[i]
-        local distance = math.abs(mPos[1] - rPos[1]) + math.abs(mPos[2] - rPos[2])
+        local distance = math.abs(pos[1] - rPos[1]) + math.abs(pos[2] - rPos[2])
         if distance < minDistance then
             minDistance = distance
             minPosI = i
