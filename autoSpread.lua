@@ -5,6 +5,8 @@ local scanner = require("scanner")
 local action = require("action")
 local config = require("config")
 
+local args = {...}
+
 local function spreadOnce()
     for slot=2, config.farmSize^2, 2 do
         gps.go(posUtil.farmToGlobal(slot))
@@ -50,8 +52,10 @@ local function main()
         action.restockAll()
     end
     gps.go({0,0})
-    action.destroyAll()
-    gps.go({0,0})
+    if #args == 1 and args[1] == "docleanup" then
+        action.destroyAll()
+        gps.go({0,0})
+    end
     if config.takeCareOfDrops then
         action.dumpInventory()
     end

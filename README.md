@@ -63,10 +63,14 @@ For crossbreeding automatically:
 
     autoCrossbreed
 
-For getting more crop from single crop (WIP):
-
-    autoSpread
-
 For min-maxing automatically:
 
     autoStat docleanup
+
+For filling up an entire forestry multifarm:
+
+    autoSpread docleanup
+
+If you want to do mix-maxing before filling up the multifarm:
+
+    autoStat && autoSpread
