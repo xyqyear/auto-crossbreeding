@@ -47,11 +47,11 @@ local function multifarmPosInFarm(pos)
 end
 
 local function globalPosToMultifarmPos(pos)
-    return {pos[1], pos[2]-4}
+    return {pos[1]-config.multifarmCentorOffset[1], pos[2]-config.multifarmCentorOffset[2]}
 end
 
 local function multifarmPosToGlobalPos(pos)
-    return {pos[1], pos[2]+4}
+    return {pos[1]+config.multifarmCentorOffset[1], pos[2]+config.multifarmCentorOffset[2]}
 end
 
 local function multifarmPosIsRelayFarmland(pos)

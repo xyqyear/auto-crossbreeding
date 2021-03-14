@@ -54,6 +54,8 @@ local config = {
 
     -----------Do Not Change Zone------------
 
+    multifarmCentorOffset = {-3, 4},
+
     multifarmDislocatorPoses = {
         {2, 0},
         {0, -2},
