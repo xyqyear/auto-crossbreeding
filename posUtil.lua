@@ -82,7 +82,7 @@ local function findOptimalDislocator(pos)
     local minPosI
     for i = 1, #config.multifarmDislocatorPoses do
         local rPos = config.multifarmDislocatorPoses[i]
-        local distance = math.abs(pos[1] - rPos[1]) + math.abs(pos[2] - rPos[2])
+        local distance = math.min(math.abs(pos[1] - rPos[1]), math.abs(pos[2] - rPos[2]))
         if distance < minDistance then
             minDistance = distance
             minPosI = i
