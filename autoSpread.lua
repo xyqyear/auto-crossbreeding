@@ -35,6 +35,9 @@ local function spreadOnce()
                 action.placeCropStick()
             end
         end
+        if action.needCharge() then
+            action.charge()
+        end
     end
     return false
 end

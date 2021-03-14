@@ -86,6 +86,9 @@ local function breedOnce()
                 end
             end
         end
+        if action.needCharge() then
+            action.charge()
+        end
     end
 end
 
