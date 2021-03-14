@@ -170,6 +170,8 @@ end
 return {
     getStorage = getStorage,
     getFarm = getFarm,
+    getLastMultifarmPos = getLastMultifarmPos,
+    setLastMultifarmPos = setLastMultifarmPos,
     scanFarm = scanFarm,
     scanStorage = scanStorage,
     scanMultifarm = scanMultifarm,
