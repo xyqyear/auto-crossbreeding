@@ -42,6 +42,14 @@ local function getFarm()
     return farm
 end
 
+local function getLastMultifarmPos()
+    return lastMultifarmPos
+end
+
+local function setLastMultifarmPos(pos)
+    lastMultifarmPos = pos
+end
+
 local function scanFarm()
     gps.save()
     for slot=1, config.farmArea, 2 do
