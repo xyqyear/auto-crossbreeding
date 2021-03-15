@@ -44,7 +44,16 @@ end
 
 local function init()
     database.scanFarm()
-    database.scanMultifarm()
+    local multifarmPos = {}
+    if #args == 2 then
+        multifarmPos[1] = tonumber(args[1])
+        multifarmPos[2] = tonumber(args[2])
+    end
+    if multifarmPos[1] and multifarmPos[2] then
+        database.setLastMultifarmPos(multifarmPos)
+    else
+        database.scanMultifarm()
+    end
     action.restockAll()
 end
 

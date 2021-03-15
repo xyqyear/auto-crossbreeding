@@ -47,11 +47,11 @@ local function multifarmPosInFarm(pos)
 end
 
 local function globalPosToMultifarmPos(pos)
-    return {pos[1], pos[2]-4}
+    return {pos[1]-config.multifarmCentorOffset[1], pos[2]-config.multifarmCentorOffset[2]}
 end
 
 local function multifarmPosToGlobalPos(pos)
-    return {pos[1], pos[2]+4}
+    return {pos[1]+config.multifarmCentorOffset[1], pos[2]+config.multifarmCentorOffset[2]}
 end
 
 local function multifarmPosIsRelayFarmland(pos)
@@ -82,7 +82,7 @@ local function findOptimalDislocator(pos)
     local minPosI
     for i = 1, #config.multifarmDislocatorPoses do
         local rPos = config.multifarmDislocatorPoses[i]
-        local distance = math.abs(pos[1] - rPos[1]) + math.abs(pos[2] - rPos[2])
+        local distance = math.max(math.abs(pos[1] - rPos[1]), math.abs(pos[2] - rPos[2]))
         if distance < minDistance then
             minDistance = distance
             minPosI = i

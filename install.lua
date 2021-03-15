@@ -36,10 +36,7 @@ if #args == 2 then
 end
 
 for i=1, #scripts do
-    if exists(scripts[i]) then
-        shell.execute("rm "..scripts[i])
-    end
-    shell.execute("wget https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/"..branch.."/"..scripts[i])
+    shell.execute("wget -f https://raw.githubusercontent.com/xyqyear/auto-crossbreeding/"..branch.."/"..scripts[i])
 end
 
 if not exists("config.lua") then
