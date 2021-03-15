@@ -6,6 +6,15 @@ local posUtil = require("posUtil")
 local config = require("config")
 
 local args = {...}
+local nonstop = false
+local docleanup = false
+if #args == 1 then
+    if args[1] == "docleanup" then
+        docleanup = true
+    elseif args[1] == "nonstop" then
+        nonstop = true
+    end
+end
 
 local lowestStat
 local lowestStatSlot
@@ -55,7 +64,7 @@ end
 local function breedOnce()
     -- return true if all stats are maxed out
     -- 52 = 21(max gr) + 31(max ga) - 0 (min re)
-    if lowestStat == 52 then
+    if not nonstop and lowestStat == 52 then
         return true
     end
 
@@ -114,7 +123,7 @@ local function main()
         action.restockAll()
     end
     gps.go({0,0})
-    if #args == 1 and args[1] == "docleanup" then
+    if docleanup then
         action.destroyAll()
         gps.go({0,0})
     end
